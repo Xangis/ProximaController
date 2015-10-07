@@ -1,7 +1,7 @@
 # ProximaController
 
 A MIDI controller application for Windows and Linux. This program was originally
-published on http://zetacentauri.com
+published on http://zetacentauri.com and via the Ubuntu Software Center
 
 ![Proxima Controller Screenshot](https://github.com/Xangis/ProximaController/blob/master/images/proximacontroller1.gif)
 
