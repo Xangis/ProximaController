@@ -10,5 +10,10 @@ Changes in Version 1.1 Update:
 
 TODO
 
+* Fix spin button drawing on Windows 10. Extra space around spin control. Image is 22 high x 16 wide.
+* Fix extra single-pixel gap around wxOctaveCtrl if possible.
+
+-- Low Priority ---
 Fix keyboard focus problems on Linux (keyboard notes don't work).
 Fix all notes off problem on Linux (suddenly broken somehow).
+
