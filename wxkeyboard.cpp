@@ -75,9 +75,8 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 
 	wxFileSystem::AddHandler(new wxZipFSHandler());
 	_helpCtrl = new wxHtmlHelpController(wxHF_CONTENTS);
-	wxStandardPaths paths;
 #ifdef WIN32
-	wxFileName filename = paths.GetDataDir() + _("\\proximacontrol.htb");
+	wxFileName filename = wxStandardPaths::Get().GetDataDir() + _("\\proximacontrol.htb");
 #else
 	wxFileName filename = wxString(_("./proximacontrol.htb"));
 #endif
@@ -182,7 +181,7 @@ void wxKeyboard::CreateControls()
           wxString port(portName.c_str(), wxConvUTF8, portName.length());
           deviceList.Add( port );
         }
-        catch (RtError &error)
+        catch (RtMidiError &error)
         {
           error.printMessage();
         }
@@ -195,7 +194,7 @@ void wxKeyboard::CreateControls()
         //_midiDevice->closePort();
         _midiDevice->openPort(0);
     }
-    catch( RtError &error )
+    catch( RtMidiError &error )
     {
         // I don't know why trying to get a std::string into a wxString is so fucking hard.
         wxString message(error.getMessage().c_str(), wxConvUTF8, error.getMessage().length());
@@ -384,17 +383,9 @@ void wxKeyboard::SetBank( int bank )
 	//WORD loWord = MAKEWORD( 32, 00 );
 	_bankText->SetLabel( wxString::Format( _("%d"), bank ));
     _ibank = bank;
-#ifdef WIN32
-	// 00 (not used), 0xXX (bank), 0x00, 0xBX (message + channel)
-	WORD loWord = MAKEWORD( (bank - 1), 0 );
-	WORD hiWord = MAKEWORD( (175 + _ichannel), 0 );
-	DWORD fullWord = MAKELONG( hiWord, loWord );
-	midiOutShortMsg(_midiDevice, fullWord );
-#else
     //std::cout << "Setting bank to " << bank << " on channel " << _ichannel << std::endl;
     SendMidiMessage( 0, 81, 0, (_ichannel + 175) );
     SendMidiMessage( 0, bank-1, 20, (_ichannel + 175) );
-#endif
 }
 
 /**
@@ -765,7 +756,7 @@ void wxKeyboard::OnChangeMidiDevice( wxCommandEvent& event )
         std::cout << "Opening port: " << _midiDevice->getPortName(selection) << std::endl;
 	    _midiDevice->openPort(selection);
     }
-    catch( RtError &error )
+    catch( RtMidiError &error )
     {
         // I don't know why trying to get a std::string into a wxString is so fucking hard.
         //wxMessageBox(wxString(error.getMessage()), _("Error Opening MIDI Out"));
@@ -888,7 +879,7 @@ void wxKeyboard::OnInfo( wxCommandEvent& event )
     wxAboutDialogInfo info;
     info.SetName(_("Proxima Controller"));
     info.SetVersion(_("1.11"));
-    info.SetCopyright(_("(c) 2006-2013 Zeta Centauri, Inc."));
+    info.SetCopyright(_("(c) 2006-2016 Zeta Centauri"));
 	info.AddDeveloper(_("Jason Champion"));
 	info.SetIcon(_icon);
 	info.SetLicense(_("Proxima Controller is freeware and may be distributed freely."));

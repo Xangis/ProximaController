@@ -1,0 +1,14 @@
+Changes in Version 1.11 (also released on Linux):
+
+* Switched MIDI from WinMM to RtMidi.
+* Updated wxWidgets from 2.8 to 3.0 for smoother rendering. (in theory)
+
+Changes in Version 1.1 Update:
+
+* Fixed an issue that would cause a note to fail to release if you clicked on one octave, dragged your mouse to another, and then released the mouse button.
+* Minor adjustments to user interface aesthetics.
+
+TODO
+
+Fix keyboard focus problems on Linux (keyboard notes don't work).
+Fix all notes off problem on Linux (suddenly broken somehow).

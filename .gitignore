@@ -22,7 +22,18 @@
 *.a
 *.lib
 
-# Executables
+# Executables and Visual Studio stuff
 *.exe
 *.out
 *.app
+*.pdb
+*.tlog
+*.log
+*.res
+*.sdf
+*.opensdf
+*.filters
+*.user
+*.manifest
+*.lastbuildstate
+*.suo

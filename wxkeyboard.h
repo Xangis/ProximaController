@@ -13,8 +13,7 @@
 #include "wxBitmapSpinButton.h"
 //typedef wxSpinButton wxBitmapSpinButton;
 #include "wxKeylessChoice.h"
-#include "rtmidi-1.0.11/RtMidi.h"
-//#include "RtMidi.h"
+#include "RtMidi.h"
 
 /*!
  * Forward declarations
