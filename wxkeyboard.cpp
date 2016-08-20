@@ -113,7 +113,7 @@ void wxKeyboard::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-/*    wxStaticText* itemStaticText4 = new wxStaticText( itemDialog1, wxID_STATIC, _("Bank"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText4 = new wxStaticText( itemDialog1, wxID_STATIC, _("Bank"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText4->SetForegroundColour(foregroundColour);
 	itemStaticText4->Connect(wxID_STATIC, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     itemBoxSizer3->Add(itemStaticText4, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
@@ -123,12 +123,12 @@ void wxKeyboard::CreateControls()
 	_bankText->Connect(ID_BANKTEXT, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     itemBoxSizer3->Add(_bankText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	_bankSpin = new wxBitmapSpinButton( itemDialog1, ID_BANKSPIN, wxDefaultPosition, wxSize( 18, 24 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
+	_bankSpin = new wxBitmapSpinButton( itemDialog1, ID_BANKSPIN, wxDefaultPosition, wxSize( 16, 22 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
     _bankSpin->SetRange(1, 127);
     _bankSpin->SetBitmap( &spinImage );
 	_bankSpin->Connect(ID_BANKSPIN, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	_bankSpin->SetToolTip( _("Change patch bank" ));
-	itemBoxSizer3->Add(_bankSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );*/
+	itemBoxSizer3->Add(_bankSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
     wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, wxID_STATIC, _("Patch"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText8->SetForegroundColour(foregroundColour);
@@ -140,7 +140,7 @@ void wxKeyboard::CreateControls()
 	_patchText->Connect(ID_PATCHTEXT, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     itemBoxSizer3->Add(_patchText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	_patchSpin = new wxBitmapSpinButton( itemDialog1, ID_PATCHSPIN, wxDefaultPosition, wxSize( 18, 24 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
+	_patchSpin = new wxBitmapSpinButton( itemDialog1, ID_PATCHSPIN, wxDefaultPosition, wxSize( 16, 22 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
     _patchSpin->SetRange(1, 128);
 #ifdef WIN32
     _patchSpin->SetBitmap( &spinImage );
@@ -157,7 +157,7 @@ void wxKeyboard::CreateControls()
     _channelText->SetForegroundColour(foregroundColour);
     itemBoxSizer3->Add(_channelText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	_channelSpin = new wxBitmapSpinButton( itemDialog1, ID_CHANNELSPIN, wxDefaultPosition, wxSize( 18, 24 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
+	_channelSpin = new wxBitmapSpinButton( itemDialog1, ID_CHANNELSPIN, wxDefaultPosition, wxSize( 16, 22 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
     _channelSpin->SetRange(1, 16);
 #ifdef WIN32
     _channelSpin->SetBitmap( &spinImage );
@@ -244,27 +244,27 @@ void wxKeyboard::CreateControls()
 	_modWheel->Connect(ID_MODWHEEL, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 
     wxBitmap _octaveBitmap(itemDialog1->GetBitmapResource(_("octave.bmp")));
-    _octave[0] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD1, _octaveBitmap, 36, this, wxDefaultPosition, wxSize(138, 99), wxNO_BORDER );
+    _octave[0] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD1, _octaveBitmap, 36, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[0], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[0]->Connect(ID_KEYBOARD1, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_octave[0]->Connect(ID_KEYBOARD1, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 
-    _octave[1] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD2, _octaveBitmap, 48, this, wxDefaultPosition, wxSize(138, 99), wxNO_BORDER );
+    _octave[1] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD2, _octaveBitmap, 48, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[1], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[1]->Connect(ID_KEYBOARD2, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_octave[1]->Connect(ID_KEYBOARD2, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 
-    _octave[2] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD3, _octaveBitmap, 60, this, wxDefaultPosition, wxSize(138, 99), wxNO_BORDER );
+    _octave[2] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD3, _octaveBitmap, 60, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[2], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[2]->Connect(ID_KEYBOARD3, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_octave[2]->Connect(ID_KEYBOARD3, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 
-    _octave[3] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD4, _octaveBitmap, 72, this, wxDefaultPosition, wxSize(138, 99), wxNO_BORDER );
+    _octave[3] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD4, _octaveBitmap, 72, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[3], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[3]->Connect(ID_KEYBOARD4, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_octave[3]->Connect(ID_KEYBOARD4, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 
-    _octave[4] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD5, _octaveBitmap, 84, this, wxDefaultPosition, wxSize(138, 99), wxNO_BORDER );
+    _octave[4] = new wxOctaveCtrl( itemDialog1, ID_KEYBOARD5, _octaveBitmap, 84, this, wxDefaultPosition, wxSize(137, 99), wxNO_BORDER );
     itemBoxSizer12->Add(_octave[4], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[4]->Connect(ID_KEYBOARD5, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_octave[4]->Connect(ID_KEYBOARD5, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
@@ -376,16 +376,12 @@ void wxKeyboard::OnBankSpinDown( wxSpinEvent& event )
 */
 void wxKeyboard::SetBank( int bank )
 {
-    // Send MIDI message
-	// Bank change 0x00 0xB0 0x00 0x[bank]  - fine
-	// Bank change 0x00 0x00 0x00 0x[bank]  - coarse
-	//Not using fine adjust, just coarse
-	//WORD loWord = MAKEWORD( 32, 00 );
 	_bankText->SetLabel( wxString::Format( _("%d"), bank ));
     _ibank = bank;
     //std::cout << "Setting bank to " << bank << " on channel " << _ichannel << std::endl;
-    SendMidiMessage( 0, 81, 0, (_ichannel + 175) );
-    SendMidiMessage( 0, bank-1, 20, (_ichannel + 175) );
+	// Always send MSB as bank 1.
+    SendMidiMessage( 0, 0, 0, (_ichannel + 175), false );
+    SendMidiMessage( 0, bank-1, 32, (_ichannel + 175), false );
 }
 
 /**
@@ -893,10 +889,6 @@ void wxKeyboard::OnInfo( wxCommandEvent& event )
 
 void wxKeyboard::SendMidiMessage(unsigned char byte1, unsigned char byte2, unsigned char byte3, unsigned char byte4, bool shortmsg)
 {
-    //WORD loWord = MAKEWORD( byte2, byte1 );
-    //WORD hiWord = MAKEWORD( byte4, byte3 );
-    //DWORD fullWord = MAKELONG( hiWord, loWord );
-    //midiOutShortMsg(_midiOutDevice, fullWord );
     std::vector<unsigned char> msg;
     msg.push_back(byte4);
     msg.push_back(byte3);
