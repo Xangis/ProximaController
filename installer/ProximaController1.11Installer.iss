@@ -39,7 +39,7 @@ Source: "C:\Users\Xangis\code\ProximaController\Release\proxima.ico"; DestDir: "
 Source: "C:\Users\Xangis\code\ProximaController\Release\proximacontrol.htb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Xangis\code\ProximaController\Release\spin.bmp"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-Source: "C:\Users\Xangis\code\ProximaController\Release\vcredist_x86.exe"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
+Source: "C:\Users\Xangis\code\ProximaController\Release\vcredist2010_x86.exe"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
 
 [Icons]
 Name: "{group}\Proxima Controller"; Filename: "{app}\ProximaController.exe"; WorkingDir: "{app}"
@@ -48,6 +48,6 @@ Name: "{commondesktop}\Proxima Controller"; Filename: "{app}\ProximaController.e
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Proxima Controller"; Filename: "{app}\ProximaController.exe"; Tasks: quicklaunchicon; WorkingDir: "{app}"
 
 [Run]
-Filename: "{app}\vcredist_x86.exe"; Parameters: "/q:a"; WorkingDir: "{app}";  StatusMsg: "Installing Visual C++ 2008 Redistributable..."; Flags: waituntilterminated
+Filename: "{app}\vcredist2010_x86.exe"; Parameters: "/q"; WorkingDir: "{app}";  StatusMsg: "Installing Visual C++ 2010 Redistributable..."; Flags: waituntilterminated
 Filename: "{app}\ProximaController.exe"; Description: "{cm:LaunchProgram,Proxima Controller}"; Flags: nowait postinstall skipifsilent
 
