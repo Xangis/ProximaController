@@ -13,6 +13,7 @@
 #include "wxBitmapSpinButton.h"
 //typedef wxSpinButton wxBitmapSpinButton;
 #include "wxKeylessChoice.h"
+#include "../wxAudioControls/wxMidiLogger.h"
 #include "RtMidi.h"
 
 /*!
@@ -48,6 +49,7 @@ class wxSpinCtrl;
 #define ID_PANICBUTTON 10017
 #define ID_INFOBUTTON 10018
 #define ID_HELPBUTTON 10019
+#define ID_LOGGERBUTTON 10020
 
 /*!
  * Compatibility
@@ -86,6 +88,7 @@ public:
 	void OnPanic( wxCommandEvent& event );
 	void OnInfo( wxCommandEvent& event );
 	void OnHelp( wxCommandEvent& event );
+	void OnLogger( wxCommandEvent& event );
 	int GetNoteValue( int value );
 	void SoundNote( int note );
 	void NoteOff( int note );
@@ -96,6 +99,7 @@ public:
     void OnMouseRelease( wxMouseEvent &event );
     wxBitmap GetBitmapResource( const wxString& name );
     wxIcon GetIconResource( const wxString& name );
+	void LogMidiInMessage( wxString& message );
     static bool ShowToolTips();
 	int GetOctaveByNote( int note );
 	// OctaveCallback members.
@@ -116,6 +120,7 @@ private:
 	wxBitmapButton* _panicButton;
 	wxBitmapButton* _infoButton;
 	wxBitmapButton* _helpButton;
+	wxBitmapButton* _loggerButton;
 	wxSlider* _modWheel;
 	wxSlider* _pitchWheel;
 	wxHtmlHelpController* _helpCtrl;
@@ -125,8 +130,12 @@ private:
 	bool _noteState[128];
     wxKeylessChoice* _device;
     wxOctaveCtrl* _octave[MAX_OCTAVES];
-    RtMidiOut* _midiDevice;
+    RtMidiOut* _midiOutDevice;
+	RtMidiIn* _midiInDevice;
+	wxMidiLogger* _logger;
 };
+
+void MidiMessageHandler( double deltatime, std::vector< unsigned char > *message, void *userData );
 
 #endif
     // _WXKEYBOARD_H_

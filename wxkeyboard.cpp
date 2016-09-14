@@ -3,6 +3,11 @@
 #include "wx/strconv.h"
 #include "wxkeyboard.h"
 
+#include "exclamation.xpm"
+#include "help.xpm"
+#include "info.xpm"
+#include "log.xpm"
+
 IMPLEMENT_DYNAMIC_CLASS( wxKeyboard, wxDialog )
 
 BEGIN_EVENT_TABLE( wxKeyboard, wxDialog )
@@ -13,6 +18,7 @@ BEGIN_EVENT_TABLE( wxKeyboard, wxDialog )
 	EVT_BUTTON( ID_PANICBUTTON, wxKeyboard::OnPanic )
 	EVT_BUTTON( ID_INFOBUTTON, wxKeyboard::OnInfo )
 	EVT_BUTTON( ID_HELPBUTTON, wxKeyboard::OnHelp )
+	EVT_BUTTON( ID_LOGGERBUTTON, wxKeyboard::OnLogger )
 
     EVT_SPIN_UP( ID_BANKSPIN, wxKeyboard::OnBankSpinUp )
     EVT_SPIN_DOWN( ID_BANKSPIN, wxKeyboard::OnBankSpinDown )
@@ -62,7 +68,8 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
     _octave[3] = NULL;
     _octave[4] = NULL;
 	// Open default MIDI device
-    _midiDevice = new RtMidiOut();
+    _midiOutDevice = new RtMidiOut();
+	_midiInDevice = new RtMidiIn();
 	memset( _noteState, 0, (sizeof(bool) * 128 ) );
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
@@ -88,6 +95,7 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 	{
 		SetIcon(_icon);
 	}
+	_logger = new wxMidiLogger(this);
     return true;
 }
 
@@ -170,14 +178,14 @@ void wxKeyboard::CreateControls()
 
     // Look for MIDI output devices before creating choice box.
 	wxArrayString deviceList;
-    unsigned int nPorts = _midiDevice->getPortCount();
+    unsigned int nPorts = _midiOutDevice->getPortCount();
     std::string portName;
     std::cout << "\nThere are " << nPorts << " MIDI output ports available.\n";
     for ( unsigned int i=0; i < nPorts; i++ )
     {
         try
         {
-          portName = _midiDevice->getPortName(i);
+          portName = _midiOutDevice->getPortName(i);
           wxString port(portName.c_str(), wxConvUTF8, portName.length());
           deviceList.Add( port );
         }
@@ -191,8 +199,7 @@ void wxKeyboard::CreateControls()
 
     try
     {
-        //_midiDevice->closePort();
-        _midiDevice->openPort(0);
+        _midiOutDevice->openPort(0);
     }
     catch( RtMidiError &error )
     {
@@ -201,13 +208,25 @@ void wxKeyboard::CreateControls()
         wxMessageBox(message, _("Error Opening MIDI Out"));
     }
 
+    try
+    {
+        _midiInDevice->openPort(0);
+        _midiInDevice->setCallback(MidiMessageHandler, this);
+    }
+    catch( RtMidiError &error )
+    {
+        // I don't know why trying to get a std::string into a wxString is so fucking hard.
+        wxString message(error.getMessage().c_str(), wxConvUTF8, error.getMessage().length());
+        wxMessageBox(message, _("Error Opening MIDI In"));
+    }
+
     _device = new wxKeylessChoice( itemDialog1, ID_MIDI_DEVICE, wxDefaultPosition, wxDefaultSize, deviceList );
 	_device->SetSelection(0);
 	_device->SetForegroundColour(foregroundColour);
 	_device->SetBackgroundColour(backgroundColour);
     itemBoxSizer3->Add(_device, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	wxBitmap panicBitmap( _("exclamation.xpm"), wxBITMAP_TYPE_XPM );
+	wxBitmap panicBitmap( exclamation_xpm, wxBITMAP_TYPE_XPM );
 	_panicButton = new wxBitmapButton( itemDialog1, ID_PANICBUTTON, panicBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
 	itemBoxSizer3->Add(_panicButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
@@ -215,20 +234,30 @@ void wxKeyboard::CreateControls()
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _panicButton->SetToolTip(_("Panic: Send all notes off MIDI message"));
 
-	wxBitmap infoBitmap( _("info.xpm"), wxBITMAP_TYPE_XPM );
+	wxBitmap infoBitmap( info_xpm, wxBITMAP_TYPE_XPM );
 	_infoButton = new wxBitmapButton( itemDialog1, ID_INFOBUTTON, infoBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
 	itemBoxSizer3->Add(_infoButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_infoButton->Connect(ID_INFOBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 
-	wxBitmap helpBitmap( _("help.xpm"), wxBITMAP_TYPE_XPM );
+	wxBitmap helpBitmap( help_xpm, wxBITMAP_TYPE_XPM );
 	_helpButton = new wxBitmapButton( itemDialog1, ID_HELPBUTTON, helpBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
 	itemBoxSizer3->Add(_helpButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_helpButton->Connect(ID_HELPBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _helpButton->SetToolTip(_("Help"));
+
+#ifndef DEMOVERSION
+	wxBitmap logBitmap( log_xpm, wxBITMAP_TYPE_XPM );
+	_loggerButton = new wxBitmapButton( itemDialog1, ID_LOGGERBUTTON, logBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
+	itemBoxSizer3->Add(_loggerButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	_loggerButton->Connect(ID_INFOBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
+	_loggerButton->Connect(ID_INFOBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+	_loggerButton->Connect(ID_INFOBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+    _loggerButton->SetToolTip(_("Show the MIDI message logger"));
+#endif
 
     wxBoxSizer* itemBoxSizer12 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer12, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
@@ -745,12 +774,12 @@ void wxKeyboard::OnChangeMidiDevice( wxCommandEvent& event )
     try
     {
         // Close the old device
-        std::cout << "Closing port: " << _midiDevice->getPortName() << std::endl;
-        _midiDevice->closePort();
+        std::cout << "Closing port: " << _midiOutDevice->getPortName() << std::endl;
+        _midiOutDevice->closePort();
 	    // Subtract 1 because the first device is -1 (MIDI Mapper).
 	    int selection = _device->GetCurrentSelection( );
-        std::cout << "Opening port: " << _midiDevice->getPortName(selection) << std::endl;
-	    _midiDevice->openPort(selection);
+        std::cout << "Opening port: " << _midiOutDevice->getPortName(selection) << std::endl;
+	    _midiOutDevice->openPort(selection);
     }
     catch( RtMidiError &error )
     {
@@ -867,6 +896,16 @@ void wxKeyboard::OnHelp( wxCommandEvent& event )
 }
 
 /**
+* Shows logger.
+*/
+void wxKeyboard::OnLogger( wxCommandEvent& event )
+{
+	// Show logger.
+	_logger->Show();
+	event.Skip();
+}
+
+/**
 * Shows about box.
 */
 void wxKeyboard::OnInfo( wxCommandEvent& event )
@@ -900,6 +939,49 @@ void wxKeyboard::SendMidiMessage(unsigned char byte1, unsigned char byte2, unsig
         msg.push_back(byte1);
       }
     }
-    _midiDevice->sendMessage(&msg);
+    _midiOutDevice->sendMessage(&msg);
+	wxString logMessage = wxString::Format(_("%02x %02x %02x %02x"), byte1, byte2, byte3, byte4);
+	_logger->AddOutMessage(logMessage);
 }
 
+void wxKeyboard::LogMidiInMessage( wxString& message )
+{
+	_logger->AddInMessage(message);
+}
+
+/**
+* Callback for MIDI message data.
+*/
+void MidiMessageHandler( double deltatime, std::vector< unsigned char > *message, void *userData )
+{
+	wxKeyboard* key = (wxKeyboard*)userData;
+
+    unsigned char a = 0;
+    unsigned char b = 0;
+    unsigned char c = 0;
+    unsigned char d = 0;
+    if( message->size() == 4 )
+    {
+        a = (*message)[3];
+        b = (*message)[2];
+        c = (*message)[1];
+        d = (*message)[0];
+    }
+    else if( message->size() == 3 )
+    {
+        b = (*message)[2];
+        c = (*message)[1];
+        d = (*message)[0];
+    }
+    else if( message->size() == 2 )
+    {
+        c = (*message)[1];
+        d = (*message)[0];
+    }
+    else if( message->size() == 1 )
+    {
+        d = (*message)[0];
+    }
+	wxString logMessage = wxString::Format(_("%02x %02x %02x %02x"), a, b, c, d);
+	key->LogMidiInMessage(logMessage);
+}
