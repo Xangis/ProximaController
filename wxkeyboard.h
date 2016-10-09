@@ -7,12 +7,12 @@
 #include "wx/filesys.h"
 #include "wx/fs_zip.h"
 #include "wx/html/helpctrl.h"
-#include "wxOctaveCtrl.h"
+#include "../wxAudioControls/wxOctaveCtrl.h"
 #include "OctaveCallback.h"
 #include "wx/stdpaths.h"
-#include "wxBitmapSpinButton.h"
+#include "../wxAudioControls/wxBitmapSpinButton.h"
 //typedef wxSpinButton wxBitmapSpinButton;
-#include "wxKeylessChoice.h"
+#include "../wxAudioControls/wxKeylessChoice.h"
 #include "../wxAudioControls/wxMidiLogger.h"
 #include "RtMidi.h"
 
