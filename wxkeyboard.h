@@ -7,7 +7,7 @@
 #include "wx/filesys.h"
 #include "wx/fs_zip.h"
 #include "wx/html/helpctrl.h"
-#include "wxOctaveCtrl.h"
+#include "../wxAudioControls/wxOctaveCtrl.h"
 #include "OctaveCallback.h"
 #include "wx/stdpaths.h"
 #include "../wxAudioControls/wxBitmapSpinButton.h"

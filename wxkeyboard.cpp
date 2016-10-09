@@ -84,9 +84,13 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 
 	wxFileSystem::AddHandler(new wxZipFSHandler());
 	_helpCtrl = new wxHtmlHelpController(wxHF_CONTENTS);
+#ifdef __APPLE__
+        wxString filename = wxString::Format(_("%s//%s"), wxStandardPaths::Get().GetResourcesDir(), _("proximacontrol.htb"));
+#endif
 #ifdef WIN32
 	wxFileName filename = wxStandardPaths::Get().GetDataDir() + _("\\proximacontrol.htb");
-#else
+#endif
+#ifdef linux
 	wxFileName filename = wxString(_("./proximacontrol.htb"));
 #endif
 	if( !_helpCtrl->AddBook(filename))
@@ -131,7 +135,7 @@ void wxKeyboard::CreateControls()
     wxStaticText* itemStaticText4 = new wxStaticText( itemDialog1, wxID_STATIC, _("Bank"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText4->SetForegroundColour(foregroundColour);
 	itemStaticText4->Connect(wxID_STATIC, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-    itemBoxSizer3->Add(itemStaticText4, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer3->Add(itemStaticText4, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     _bankText = new wxStaticText( itemDialog1, ID_BANKTEXT, _T("1"), wxDefaultPosition, wxSize( 22, -1 ), 0 );
     _bankText->SetForegroundColour(foregroundColour);
@@ -148,7 +152,7 @@ void wxKeyboard::CreateControls()
     wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, wxID_STATIC, _("Patch"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText8->SetForegroundColour(foregroundColour);
 	itemStaticText8->Connect(wxID_STATIC, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-    itemBoxSizer3->Add(itemStaticText8, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer3->Add(itemStaticText8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     _patchText = new wxStaticText( itemDialog1, ID_PATCHTEXT, _T("1"), wxDefaultPosition, wxSize( 22, -1 ), 0 );
     _patchText->SetForegroundColour(foregroundColour);
@@ -162,11 +166,11 @@ void wxKeyboard::CreateControls()
 #endif
 	_patchSpin->Connect(ID_PATCHSPIN, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	_patchSpin->SetToolTip( _("Change patch number") );
-	itemBoxSizer3->Add(_patchSpin, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+	itemBoxSizer3->Add(_patchSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
     wxStaticText* itemStaticText10 = new wxStaticText( itemDialog1, wxID_STATIC, _("MIDI Channel"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText10->SetForegroundColour(foregroundColour);
-    itemBoxSizer3->Add(itemStaticText10, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer3->Add(itemStaticText10, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     _channelText = new wxStaticText( itemDialog1, ID_CHANNELTEXT, _T("1"), wxDefaultPosition, wxDefaultSize, 0 );
     _channelText->SetForegroundColour(foregroundColour);
@@ -177,11 +181,11 @@ void wxKeyboard::CreateControls()
 #ifdef WIN32
     _channelSpin->SetBitmap( &spinImage );
 #endif
-	itemBoxSizer3->Add(_channelSpin, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+	itemBoxSizer3->Add(_channelSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
     wxStaticText* itemStaticText11 = new wxStaticText( itemDialog1, wxID_STATIC, _("MIDI Device"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText11->SetForegroundColour(foregroundColour);
-    itemBoxSizer3->Add(itemStaticText11, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer3->Add(itemStaticText11, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // Look for MIDI output devices before creating choice box.
 	wxArrayString deviceList;
