@@ -7,6 +7,7 @@
 #include "help.xpm"
 #include "info.xpm"
 #include "log.xpm"
+#include "vector.xpm"
 
 IMPLEMENT_DYNAMIC_CLASS( wxKeyboard, wxDialog )
 
@@ -19,6 +20,7 @@ BEGIN_EVENT_TABLE( wxKeyboard, wxDialog )
 	EVT_BUTTON( ID_INFOBUTTON, wxKeyboard::OnInfo )
 	EVT_BUTTON( ID_HELPBUTTON, wxKeyboard::OnHelp )
 	EVT_BUTTON( ID_LOGGERBUTTON, wxKeyboard::OnLogger )
+	EVT_BUTTON( ID_VECTORBUTTON, wxKeyboard::OnVector )
 
     EVT_SPIN_UP( ID_BANKSPIN, wxKeyboard::OnBankSpinUp )
     EVT_SPIN_DOWN( ID_BANKSPIN, wxKeyboard::OnBankSpinDown )
@@ -91,11 +93,16 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 	{
 		wxMessageBox( _("Unable to load help file.  Please make sure that proximacontrol.htb is in the program directory." ));
 	}
+	// Create subwindows.
+	_logger = new wxMidiLogger(this);
+	_vector = new wxVectorDlg(this);
+	// Load icon.
 	if( _icon.LoadFile(_("proxima.ico"), wxBITMAP_TYPE_ICO ))
 	{
+		_logger->SetIcon(_icon);
+		_vector->SetIcon(_icon);
 		SetIcon(_icon);
 	}
-	_logger = new wxMidiLogger(this);
     return true;
 }
 
@@ -257,6 +264,14 @@ void wxKeyboard::CreateControls()
 	_loggerButton->Connect(ID_INFOBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_loggerButton->Connect(ID_INFOBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _loggerButton->SetToolTip(_("Show the MIDI message logger"));
+
+	wxBitmap vectorBitmap( vector_xpm, wxBITMAP_TYPE_XPM );
+	_vectorButton = new wxBitmapButton( itemDialog1, ID_VECTORBUTTON, vectorBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
+	itemBoxSizer3->Add(_vectorButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	_vectorButton->Connect(ID_VECTORBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
+	_vectorButton->Connect(ID_VECTORBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+	_vectorButton->Connect(ID_VECTORBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+    _vectorButton->SetToolTip(_("Show the Vector Control Pad"));
 #endif
 
     wxBoxSizer* itemBoxSizer12 = new wxBoxSizer(wxHORIZONTAL);
@@ -904,6 +919,17 @@ void wxKeyboard::OnLogger( wxCommandEvent& event )
 	_logger->Show();
 	event.Skip();
 }
+
+/**
+* Shows logger.
+*/
+void wxKeyboard::OnVector( wxCommandEvent& event )
+{
+	// Show vector pad.
+	_vector->Show();
+	event.Skip();
+}
+
 
 /**
 * Shows about box.

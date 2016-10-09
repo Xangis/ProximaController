@@ -10,10 +10,11 @@
 #include "wxOctaveCtrl.h"
 #include "OctaveCallback.h"
 #include "wx/stdpaths.h"
-#include "wxBitmapSpinButton.h"
+#include "../wxAudioControls/wxBitmapSpinButton.h"
 //typedef wxSpinButton wxBitmapSpinButton;
-#include "wxKeylessChoice.h"
+#include "../wxAudioControls/wxKeylessChoice.h"
 #include "../wxAudioControls/wxMidiLogger.h"
+#include "../wxAudioControls/wxVectorDlg.h"
 #include "RtMidi.h"
 
 /*!
@@ -50,6 +51,7 @@ class wxSpinCtrl;
 #define ID_INFOBUTTON 10018
 #define ID_HELPBUTTON 10019
 #define ID_LOGGERBUTTON 10020
+#define ID_VECTORBUTTON 10021
 
 /*!
  * Compatibility
@@ -89,6 +91,7 @@ public:
 	void OnInfo( wxCommandEvent& event );
 	void OnHelp( wxCommandEvent& event );
 	void OnLogger( wxCommandEvent& event );
+	void OnVector( wxCommandEvent& event );
 	int GetNoteValue( int value );
 	void SoundNote( int note );
 	void NoteOff( int note );
@@ -121,6 +124,7 @@ private:
 	wxBitmapButton* _infoButton;
 	wxBitmapButton* _helpButton;
 	wxBitmapButton* _loggerButton;
+	wxBitmapButton* _vectorButton;
 	wxSlider* _modWheel;
 	wxSlider* _pitchWheel;
 	wxHtmlHelpController* _helpCtrl;
@@ -133,6 +137,7 @@ private:
     RtMidiOut* _midiOutDevice;
 	RtMidiIn* _midiInDevice;
 	wxMidiLogger* _logger;
+	wxVectorDlg* _vector;
 };
 
 void MidiMessageHandler( double deltatime, std::vector< unsigned char > *message, void *userData );
