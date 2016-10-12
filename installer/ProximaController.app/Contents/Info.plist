@@ -2,17 +2,29 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
 	<key>CFBundleIconFile</key>
 	<string>proxima.icns</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.zetacentauri.ProximaController</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.1.0</string>
+	<string>1.1</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.1</string>
 	<key>CFBundleSignature</key>
 	<string>ttxt</string>
 	<key>CFBundleExecutable</key>
-        <string>ProximaController/string>
+        <string>ProximaController</string>
+        <key>LSApplicationCategoryType</key>
+        <string>public.app-category.music</string>
+	<key>CFBundleName</key>
+	<string>ProximaController</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2016 Jason Champion. All rights reserved.</string>
 </dict>
 </plist>
