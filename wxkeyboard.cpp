@@ -926,7 +926,10 @@ void wxKeyboard::OnHelp( wxCommandEvent& event )
 void wxKeyboard::OnLogger( wxCommandEvent& event )
 {
 	// Show logger.
-	_logger->Show();
+        if( _logger != NULL )
+        {
+	    _logger->Show();
+        }
 	event.Skip();
 }
 
@@ -976,13 +979,19 @@ void wxKeyboard::SendMidiMessage(unsigned char byte1, unsigned char byte2, unsig
       }
     }
     _midiOutDevice->sendMessage(&msg);
-	wxString logMessage = wxString::Format(_("%02x %02x %02x %02x"), byte1, byte2, byte3, byte4);
-	_logger->AddOutMessage(logMessage);
+    if( _logger != NULL )
+    {
+        wxString logMessage = wxString::Format(_("%02x %02x %02x %02x"), byte1, byte2, byte3, byte4);
+        _logger->AddOutMessage(logMessage);
+    }
 }
 
 void wxKeyboard::LogMidiInMessage( wxString& message )
 {
-	_logger->AddInMessage(message);
+    if( _logger != NULL )
+    {
+        _logger->AddInMessage(message);
+    }
 }
 
 /**
