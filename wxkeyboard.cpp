@@ -8,6 +8,7 @@
 #include "info.xpm"
 #include "log.xpm"
 #include "vector.xpm"
+#include "spin.xpm"
 
 IMPLEMENT_DYNAMIC_CLASS( wxKeyboard, wxDialog )
 
@@ -85,13 +86,16 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 	wxFileSystem::AddHandler(new wxZipFSHandler());
 	_helpCtrl = new wxHtmlHelpController(wxHF_CONTENTS);
 #ifdef __APPLE__
-        wxString filename = wxString::Format(_("%s//%s"), wxStandardPaths::Get().GetResourcesDir(), _("proximacontrol.htb"));
+        wxString filename = wxString::Format(_("%s/%s"), wxStandardPaths::Get().GetResourcesDir(), _("proximacontrol.htb"));
+        wxString iconFile = wxString::Format(_("%s/%s"), wxStandardPaths::Get().GetResourcesDir(), _("proxima.ico"));
 #endif
 #ifdef WIN32
 	wxFileName filename = wxStandardPaths::Get().GetDataDir() + _("\\proximacontrol.htb");
+        wxString iconFIle = _("proxima.ico");
 #endif
 #ifdef linux
 	wxFileName filename = wxString(_("./proximacontrol.htb"));
+        wxString iconFIle = _("proxima.ico");
 #endif
 	if( !_helpCtrl->AddBook(filename))
 	{
@@ -101,7 +105,7 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 	_logger = new wxMidiLogger(this);
 	_vector = new wxVectorDlg(this);
 	// Load icon.
-	if( _icon.LoadFile(_("proxima.ico"), wxBITMAP_TYPE_ICO ))
+	if( _icon.LoadFile(iconFile, wxBITMAP_TYPE_ICO ))
 	{
 		_logger->SetIcon(_icon);
 		_vector->SetIcon(_icon);
@@ -119,8 +123,6 @@ void wxKeyboard::OnMouseRelease( wxMouseEvent& event )
 void wxKeyboard::CreateControls()
 {
     wxKeyboard* itemDialog1 = this;
-    wxImage spinImage;
-    spinImage.LoadFile( _("spin.bmp"), wxBITMAP_TYPE_BMP );
 
 	wxColour foregroundColour = wxColour( 0, 160, 80 );
 	wxColour backgroundColour = wxColour( 2, 30, 2 );
@@ -144,7 +146,7 @@ void wxKeyboard::CreateControls()
 
 	_bankSpin = new wxBitmapSpinButton( itemDialog1, ID_BANKSPIN, wxDefaultPosition, wxSize( 16, 22 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
     _bankSpin->SetRange(1, 127);
-    _bankSpin->SetBitmap( &spinImage );
+    _bankSpin->SetXpmBitmap(spin_xpm);
 	_bankSpin->Connect(ID_BANKSPIN, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
 	_bankSpin->SetToolTip( _("Change patch bank" ));
 	itemBoxSizer3->Add(_bankSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
@@ -159,14 +161,12 @@ void wxKeyboard::CreateControls()
 	_patchText->Connect(ID_PATCHTEXT, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     itemBoxSizer3->Add(_patchText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	_patchSpin = new wxBitmapSpinButton( itemDialog1, ID_PATCHSPIN, wxDefaultPosition, wxSize( 16, 22 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
+    _patchSpin = new wxBitmapSpinButton( itemDialog1, ID_PATCHSPIN, wxDefaultPosition, wxSize( 16, 22 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
     _patchSpin->SetRange(1, 128);
-#ifdef WIN32
-    _patchSpin->SetBitmap( &spinImage );
-#endif
-	_patchSpin->Connect(ID_PATCHSPIN, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-	_patchSpin->SetToolTip( _("Change patch number") );
-	itemBoxSizer3->Add(_patchSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+    _patchSpin->SetXpmBitmap(spin_xpm);
+    _patchSpin->Connect(ID_PATCHSPIN, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+    _patchSpin->SetToolTip( _("Change patch number") );
+    itemBoxSizer3->Add(_patchSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
     wxStaticText* itemStaticText10 = new wxStaticText( itemDialog1, wxID_STATIC, _("MIDI Channel"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText10->SetForegroundColour(foregroundColour);
@@ -176,19 +176,17 @@ void wxKeyboard::CreateControls()
     _channelText->SetForegroundColour(foregroundColour);
     itemBoxSizer3->Add(_channelText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	_channelSpin = new wxBitmapSpinButton( itemDialog1, ID_CHANNELSPIN, wxDefaultPosition, wxSize( 16, 22 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
+    _channelSpin = new wxBitmapSpinButton( itemDialog1, ID_CHANNELSPIN, wxDefaultPosition, wxSize( 16, 22 ), wxSP_ARROW_KEYS|wxSP_VERTICAL );
     _channelSpin->SetRange(1, 16);
-#ifdef WIN32
-    _channelSpin->SetBitmap( &spinImage );
-#endif
-	itemBoxSizer3->Add(_channelSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+    _channelSpin->SetXpmBitmap(spin_xpm);
+    itemBoxSizer3->Add(_channelSpin, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
     wxStaticText* itemStaticText11 = new wxStaticText( itemDialog1, wxID_STATIC, _("MIDI Device"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText11->SetForegroundColour(foregroundColour);
     itemBoxSizer3->Add(itemStaticText11, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // Look for MIDI output devices before creating choice box.
-	wxArrayString deviceList;
+    wxArrayString deviceList;
     unsigned int nPorts = _midiOutDevice->getPortCount();
     std::string portName;
     std::cout << "\nThere are " << nPorts << " MIDI output ports available.\n";
@@ -227,8 +225,10 @@ void wxKeyboard::CreateControls()
     catch( RtMidiError &error )
     {
         // I don't know why trying to get a std::string into a wxString is so fucking hard.
+        /* No warning messages for lack of MIDI in. This is a MIDI out app.
         wxString message(error.getMessage().c_str(), wxConvUTF8, error.getMessage().length());
         wxMessageBox(message, _("Error Opening MIDI In"));
+        */
     }
 
     _device = new wxKeylessChoice( itemDialog1, ID_MIDI_DEVICE, wxDefaultPosition, wxDefaultSize, deviceList );
@@ -261,6 +261,7 @@ void wxKeyboard::CreateControls()
     _helpButton->SetToolTip(_("Help"));
 
 #ifndef DEMOVERSION
+#ifndef __APPLE__
 	wxBitmap logBitmap( log_xpm, wxBITMAP_TYPE_XPM );
 	_loggerButton = new wxBitmapButton( itemDialog1, ID_LOGGERBUTTON, logBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
 	itemBoxSizer3->Add(_loggerButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
@@ -276,6 +277,7 @@ void wxKeyboard::CreateControls()
 	_vectorButton->Connect(ID_VECTORBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
 	_vectorButton->Connect(ID_VECTORBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _vectorButton->SetToolTip(_("Show the Vector Control Pad"));
+#endif
 #endif
 
     wxBoxSizer* itemBoxSizer12 = new wxBoxSizer(wxHORIZONTAL);
