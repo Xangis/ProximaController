@@ -8,7 +8,7 @@
 AppId={{CAECD8FC-317B-4DD3-BD61-BD4C89FD3E8B}
 AppName=Proxima Controller
 AppVerName=Proxima Controller 1.11
-AppPublisher=Zeta Centauri, Inc.
+AppPublisher=Zeta Centauri
 AppPublisherURL=http://zetacentauri.com
 AppSupportURL=http://zetacentauri.com
 AppUpdatesURL=http://zetacentauri.com
@@ -27,7 +27,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
 Source: "C:\Users\Xangis\code\ProximaController\Release\ProximaController.exe"; DestDir: "{app}"; Flags: ignoreversion
