@@ -14,8 +14,14 @@ on the MIDI devices it is controlling to produce sound.
 It supports bank and patch changes, transmits on MIDI channels 1-16, includes pitch and 
 modulation sliders, and has five octaves of control.
 
-The GUI for this application was developed using wxWidgets.
+This project depends on my wxAudioControls library, a wxWidgets control library designed for
+use with audio applications:
+https://github.com/Xangis/wxAudioControls
+
+The GUI for this application was developed using wxWidgets:
+http://www.wxwidgets.org
 
 This program uses the RtMidi library by Gary P. Scavone.
+http://www.music.mcgill.ca/~gary/rtmidi/
 
 A prebuilt Windows installer and Linux binaries are available in the installer directory.
