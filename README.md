@@ -18,6 +18,9 @@ This project depends on my wxAudioControls library, a wxWidgets control library 
 use with audio applications:
 https://github.com/Xangis/wxAudioControls
 
+The wxAudioControls should be checked out in a directory next to the Proxima Controller
+directory (they should both have the same parent directory).
+
 The GUI for this application was developed using wxWidgets:
 http://www.wxwidgets.org
 
