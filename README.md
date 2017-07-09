@@ -44,12 +44,15 @@ wxWidgets here:
 http://www.wxwidgets.org
 
 This program also uses the RtMidi library by Gary P. Scavone, which is
-available here:
+available here (need version 2.1 or newer):
 
 http://www.music.mcgill.ca/~gary/rtmidi/
 
 This project depends on my wxAudioControls library, a wxWidgets control library 
 designed for use with audio applications: https://github.com/Xangis/wxAudioControls
+
+You'll need to check out wxAudioControls and put it in the parent directory of 
+this project (so they're side-by-side).
 
 ### Windows
 
