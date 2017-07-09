@@ -91,7 +91,7 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 #endif
 #ifdef WIN32
 	wxFileName filename = wxStandardPaths::Get().GetDataDir() + _("\\proximacontrol.htb");
-        wxString iconFIle = _("proxima.ico");
+    wxString iconFile = _("proxima.ico");
 #endif
 #ifdef linux
 	wxFileName filename = wxString(_("./proximacontrol.htb"));

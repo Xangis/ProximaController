@@ -101,8 +101,8 @@ At one point a build was submitted to the app store, but it was not approved.
 
 I still maintain this application and will update it as needed.
 
-I'm currently working on adding a new vector control feature, but it is 
-incomplete.
+I'm currently working on adding a new vector control feature and a MIDI logger, 
+but it those features are incomplete.
 
 On some platforms, especially Windows and OSX, build and installer paths are 
 specific to my development environment and more work could be done to make 
