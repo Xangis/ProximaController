@@ -99,8 +99,10 @@ At one point a build was submitted to the app store, but it was not approved.
 
 # Development Status
 
-I consider this application complete and no new features are being developed 
-for it. However, I do still maintain it and will update it as needed.
+I still maintain this application and will update it as needed.
+
+I'm currently working on adding a new vector control feature, but it is 
+incomplete.
 
 On some platforms, especially Windows and OSX, build and installer paths are 
 specific to my development environment and more work could be done to make 

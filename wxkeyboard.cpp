@@ -951,16 +951,16 @@ void wxKeyboard::OnVector( wxCommandEvent& event )
 */
 void wxKeyboard::OnInfo( wxCommandEvent& event )
 {
-	// Show about box.
+    // Show about box.
     wxAboutDialogInfo info;
     info.SetName(_("Proxima Controller"));
-    info.SetVersion(_("1.11"));
-    info.SetCopyright(_("(c) 2006-2016 Zeta Centauri"));
-	info.AddDeveloper(_("Jason Champion"));
-	info.SetIcon(_icon);
-	info.SetLicense(_("Proxima Controller is freeware and may be distributed freely."));
-	info.SetWebSite(_("http://zetacentauri.com"));
-	info.SetDescription(_("Proxima Controller uses the wxWidgets and RtMidi libraries."));
+    info.SetVersion(_("1.12"));
+    info.SetCopyright(_("(c) 2006-2017 Jason Champion"));
+    info.AddDeveloper(_("Jason Champion"));
+    info.SetIcon(_icon);
+    info.SetLicense(_("Proxima Controller is freeware and may be distributed freely under the terms of the MIT license."));
+    info.SetWebSite(_("https://github.com/Xangis/ProximaController"));
+    info.SetDescription(_("Proxima Controller uses the wxWidgets and RtMidi libraries."));
 
     wxAboutBox(info);
 
