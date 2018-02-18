@@ -35,5 +35,6 @@
 *.manifest
 *.lastbuildstate
 *.suo
-
+ipch/
+Debug/
 .DS_Store
