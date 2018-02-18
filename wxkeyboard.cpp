@@ -10,9 +10,17 @@
 #include "vector.xpm"
 #include "spin.xpm"
 
+#ifdef __APPLE__
+IMPLEMENT_DYNAMIC_CLASS( wxKeyboard, wxFrame )
+#else
 IMPLEMENT_DYNAMIC_CLASS( wxKeyboard, wxDialog )
+#endif
 
+#ifdef __APPLE__
+BEGIN_EVENT_TABLE( wxKeyboard, wxFrame )
+#else
 BEGIN_EVENT_TABLE( wxKeyboard, wxDialog )
+#endif
     EVT_CLOSE( wxKeyboard::OnCloseWindow )
     EVT_KEY_DOWN( wxKeyboard::OnKeyDown )
     EVT_KEY_UP( wxKeyboard::OnKeyUp )
@@ -35,9 +43,17 @@ BEGIN_EVENT_TABLE( wxKeyboard, wxDialog )
 	EVT_COMMAND_SCROLL( ID_MODWHEEL, wxKeyboard::OnModWheel )
 	EVT_COMMAND_SCROLL( ID_PITCHWHEEL, wxKeyboard::OnPitchWheel )
 
+    EVT_MENU( wxID_EXIT, wxKeyboard::OnExit )
+    EVT_MENU( wxID_ABOUT, wxKeyboard::OnInfo )
+    EVT_MENU( wxID_HELP, wxKeyboard::OnHelp )
+
     EVT_LEFT_UP(wxKeyboard::OnMouseRelease) // Catches note off outside of an octave control.
 END_EVENT_TABLE()
 
+void wxKeyboard::OnExit(wxCommandEvent& )
+{
+    Close();
+}
 
 wxKeyboard::wxKeyboard( )
 {
@@ -75,7 +91,11 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 	_midiInDevice = new RtMidiIn();
 	memset( _noteState, 0, (sizeof(bool) * 128 ) );
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
+#ifdef __APPLE__
+    wxFrame::Create( parent, id, caption, pos, size, style );
+#else
     wxDialog::Create( parent, id, caption, pos, size, style );
+#endif
 
     CreateControls();
     GetSizer()->Fit(this);

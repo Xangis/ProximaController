@@ -63,7 +63,11 @@ class wxSpinCtrl;
 /*!
  * wxKeyboard class declaration
  */
+#ifdef __APPLE__
+class wxKeyboard: public wxFrame, public OctaveCallback
+#else
 class wxKeyboard: public wxDialog, public OctaveCallback
+#endif
 {
     DECLARE_DYNAMIC_CLASS( wxKeyboard )
     DECLARE_EVENT_TABLE()
@@ -92,6 +96,7 @@ public:
 	void OnHelp( wxCommandEvent& event );
 	void OnLogger( wxCommandEvent& event );
 	void OnVector( wxCommandEvent& event );
+        void OnExit( wxCommandEvent& event );
 	int GetNoteValue( int value );
 	void SoundNote( int note );
 	void NoteOff( int note );
@@ -123,8 +128,8 @@ private:
 	wxBitmapButton* _panicButton;
 	wxBitmapButton* _infoButton;
 	wxBitmapButton* _helpButton;
-	wxBitmapButton* _loggerButton;
-	wxBitmapButton* _vectorButton;
+	//wxBitmapButton* _loggerButton;
+	//wxBitmapButton* _vectorButton;
 	wxSlider* _modWheel;
 	wxSlider* _pitchWheel;
 	wxHtmlHelpController* _helpCtrl;
