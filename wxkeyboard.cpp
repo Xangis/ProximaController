@@ -144,8 +144,17 @@ void wxKeyboard::CreateControls()
 {
     wxKeyboard* itemDialog1 = this;
 
-	wxColour foregroundColour = wxColour( 0, 160, 80 );
-	wxColour backgroundColour = wxColour( 2, 30, 2 );
+    // Create menu bar (for Mac)
+#ifdef __APPLE__
+    wxMenu* helpMenu = new wxMenu();
+    helpMenu->Append(wxID_HELP);
+    wxMenuBar* menuBar = new wxMenuBar();
+    menuBar->Append( helpMenu, "&Help" );
+    SetMenuBar(menuBar);
+#endif
+
+    wxColour foregroundColour = wxColour( 0, 160, 80 );
+    wxColour backgroundColour = wxColour( 2, 30, 2 );
 
     this->SetBackgroundColour(backgroundColour);
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
@@ -344,6 +353,7 @@ void wxKeyboard::CreateControls()
     itemBoxSizer12->Add(_octave[4], 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 	_octave[4]->Connect(ID_KEYBOARD5, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
 	_octave[4]->Connect(ID_KEYBOARD5, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+
 }
 
 bool wxKeyboard::ShowToolTips()
@@ -975,10 +985,10 @@ void wxKeyboard::OnInfo( wxCommandEvent& event )
     wxAboutDialogInfo info;
     info.SetName(_("Proxima Controller"));
     info.SetVersion(_("1.12"));
-    info.SetCopyright(_("(c) 2006-2017 Jason Champion"));
+    info.SetCopyright(_("(c) 2006-2019 Jason Champion"));
     info.AddDeveloper(_("Jason Champion"));
     info.SetIcon(_icon);
-    info.SetLicense(_("Proxima Controller is freeware and may be distributed freely under the terms of the MIT license."));
+    info.SetLicense(_("Proxima Controller is freeware and may be distributed freely."));
     info.SetWebSite(_("https://github.com/Xangis/ProximaController"));
     info.SetDescription(_("Proxima Controller uses the wxWidgets and RtMidi libraries."));
 
