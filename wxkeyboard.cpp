@@ -148,6 +148,7 @@ void wxKeyboard::CreateControls()
 #ifdef __APPLE__
     wxMenu* helpMenu = new wxMenu();
     helpMenu->Append(wxID_HELP);
+    helpMenu->Append(wxID_ABOUT);
     wxMenuBar* menuBar = new wxMenuBar();
     menuBar->Append( helpMenu, "&Help" );
     SetMenuBar(menuBar);
