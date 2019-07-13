@@ -6,7 +6,7 @@ WX_CONFIG := wx-config
 # Main executable file
 PROGRAM = installer/ProximaController.app/Contents/MacOS/ProximaController
 INCLUDEDIR = ../../lib/rtmidi-4.0.0
-LIBDIR = ../../lib/rtmidi-4.0.0
+LIBDIR = ../../lib/rtmidi-4.0.0/.libs/
 
 # Object files
 OBJECTS = ../wxAudioControls/wxOctaveCtrl.o wxkeyboardapp.o ../wxAudioControls/wxKeylessChoice.o ../wxAudioControls/wxKeylessSpinCtrl.o wxkeyboard.o ../wxAudioControls/wxBitmapSpinButton.o $(INCLUDEDIR)/RtMidi.o ../wxAudioControls/wxMidiLogger.o ../wxAudioControls/wxVectorDlg.o
