@@ -87,6 +87,9 @@ library paths in the application bundle.
 
 At one point a build was submitted to the app store, but it was not approved.
 
+NOTE: I was unable to upload with the Application Uploader version 3.7.2. I had
+to install version 3.1.
+
 # Changelog
 
 ### Version 1.11:
