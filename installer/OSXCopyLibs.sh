@@ -12,3 +12,7 @@ cp /usr/local/lib/libwx_osx_cocoau_xrc-3.1.dylib ProximaController.app/Contents/
 cp /usr/local/lib/libwx_baseu-3.1.dylib ProximaController.app/Contents/Frameworks/
 cp ../../../lib/SDL2_ttf-2.0.15/.libs/libSDL2_ttf-2.0.0.dylib ProximaController.app/Contents/Frameworks/
 cp ../../..//lib/rtmidi-4.0.0/.libs/librtmidi.5.dylib ProximaController.app/Contents/Frameworks/
+cp /usr/local/opt/libpng/lib/libpng16.16.dylib ProximaController.app/Contents/Frameworks/
+cp /usr/local/opt/jpeg/lib/libjpeg.9.dylib ProximaController.app/Contents/Frameworks/
+cp /usr/local/opt/libtiff/lib/libtiff.5.dylib ProximaController.app/Contents/Frameworks/
+cp /usr/local/opt/xz/lib/liblzma.5.dylib ProximaController.app/Contents/Frameworks/

@@ -127,9 +127,11 @@ bool wxKeyboard::Create( wxWindow* parent, wxWindowID id, const wxString& captio
 	// Load icon.
 	if( _icon.LoadFile(iconFile, wxBITMAP_TYPE_ICO ))
 	{
+#ifndef __APPLE__
 		_logger->SetIcon(_icon);
 		_vector->SetIcon(_icon);
 		SetIcon(_icon);
+#endif
 	}
     return true;
 }

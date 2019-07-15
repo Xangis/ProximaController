@@ -13,15 +13,17 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.12</string>
+	<string>1.12.2</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.12</string>
 	<key>CFBundleSignature</key>
 	<string>ttxt</string>
 	<key>CFBundleExecutable</key>
-        <string>ProximaController</string>
-        <key>LSApplicationCategoryType</key>
-        <string>public.app-category.music</string>
+    <string>ProximaController</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.music</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>10.11.0</string>
 	<key>CFBundleName</key>
 	<string>ProximaController</string>
 	<key>NSHumanReadableCopyright</key>
