@@ -277,23 +277,8 @@ void wxKeyboard::CreateControls()
 	_panicButton->Connect(ID_PANICBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
     _panicButton->SetToolTip(_("Panic: Send all notes off MIDI message"));
 
-<<<<<<< HEAD
-	wxBitmap infoBitmap(info_xpm);
-	_infoButton = new wxBitmapButton( itemDialog1, ID_INFOBUTTON, infoBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_infoButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
-	_infoButton->Connect(ID_INFOBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-
-	wxBitmap helpBitmap(help_xpm);
-	_helpButton = new wxBitmapButton( itemDialog1, ID_HELPBUTTON, helpBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_helpButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
-	_helpButton->Connect(ID_HELPBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-=======
 #ifndef __APPLE__
-    wxBitmap infoBitmap( info_xpm, wxBITMAP_TYPE_XPM );
+    wxBitmap infoBitmap(info_xpm);
     _infoButton = new wxBitmapButton( itemDialog1, ID_INFOBUTTON, infoBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
     itemBoxSizer3->Add(_infoButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
     _infoButton->Connect(ID_INFOBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
@@ -302,35 +287,34 @@ void wxKeyboard::CreateControls()
 #endif
 
 #ifndef __APPLE__
-    wxBitmap helpBitmap( help_xpm, wxBITMAP_TYPE_XPM );
+    wxBitmap helpBitmap(help_xpm);
     _helpButton = new wxBitmapButton( itemDialog1, ID_HELPBUTTON, helpBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
     itemBoxSizer3->Add(_helpButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
     _helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
     _helpButton->Connect(ID_HELPBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
     _helpButton->Connect(ID_HELPBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
->>>>>>> 680b8d345bf17b8e21519ef6cefabf3e763cae39
     _helpButton->SetToolTip(_("Help"));
 #endif
 
-#ifndef DEMOVERSION
-#ifndef __APPLE__
-	wxBitmap logBitmap(log_xpm);
-	_loggerButton = new wxBitmapButton( itemDialog1, ID_LOGGERBUTTON, logBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_loggerButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	_loggerButton->Connect(ID_INFOBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_loggerButton->Connect(ID_INFOBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
-	_loggerButton->Connect(ID_INFOBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-    _loggerButton->SetToolTip(_("Show the MIDI message logger"));
-
-	wxBitmap vectorBitmap(vector_xpm);
-	_vectorButton = new wxBitmapButton( itemDialog1, ID_VECTORBUTTON, vectorBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
-	itemBoxSizer3->Add(_vectorButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	_vectorButton->Connect(ID_VECTORBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
-	_vectorButton->Connect(ID_VECTORBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
-	_vectorButton->Connect(ID_VECTORBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
-    _vectorButton->SetToolTip(_("Show the Vector Control Pad"));
-#endif
-#endif
+//#ifndef DEMOVERSION
+//#ifndef __APPLE__
+//	wxBitmap logBitmap(log_xpm);
+//	_loggerButton = new wxBitmapButton( itemDialog1, ID_LOGGERBUTTON, logBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
+//	itemBoxSizer3->Add(_loggerButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+//	_loggerButton->Connect(ID_INFOBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
+//	_loggerButton->Connect(ID_INFOBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+//	_loggerButton->Connect(ID_INFOBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+//    _loggerButton->SetToolTip(_("Show the MIDI message logger"));
+//
+//	wxBitmap vectorBitmap(vector_xpm);
+//	_vectorButton = new wxBitmapButton( itemDialog1, ID_VECTORBUTTON, vectorBitmap, wxDefaultPosition, wxSize( 26, 26 ) );
+//	itemBoxSizer3->Add(_vectorButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+//	_vectorButton->Connect(ID_VECTORBUTTON, wxEVT_KEY_DOWN, wxKeyEventHandler(wxKeyboard::OnKeyDown), NULL, this);
+//	_vectorButton->Connect(ID_VECTORBUTTON, wxEVT_KEY_UP, wxKeyEventHandler(wxKeyboard::OnKeyUp), NULL, this);
+//	_vectorButton->Connect(ID_VECTORBUTTON, wxEVT_LEFT_UP, wxMouseEventHandler(wxKeyboard::OnMouseRelease), NULL, this);
+//    _vectorButton->SetToolTip(_("Show the Vector Control Pad"));
+//#endif
+//#endif
 
     wxBoxSizer* itemBoxSizer12 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer12, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
