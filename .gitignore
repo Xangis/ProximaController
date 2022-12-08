@@ -38,3 +38,4 @@
 ipch/
 Debug/
 .DS_Store
+.vs
